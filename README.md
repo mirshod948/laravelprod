@@ -1,1 +1,1 @@
-# test
+Talabalar uchun test tizimi 
