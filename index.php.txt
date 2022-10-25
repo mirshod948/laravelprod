@@ -4,3 +4,7 @@
 echo "salom";
 
 echo 4555555555555555555555555; 
+
+echo 4555+455;
+
+print_r("salom);
