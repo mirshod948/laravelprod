@@ -1,0 +1,84 @@
+To set up a Linux Ubuntu server, you will need the following:
+
+A computer or virtual machine with at least 512 MB of RAM and 10 GB of storage to run the Ubuntu server operating system.
+
+A bootable Ubuntu server ISO image, which can be downloaded from the Ubuntu website.
+
+A method to install the operating system on the computer or virtual machine, such as a USB flash drive or DVD.
+
+Basic knowledge of the Linux command line and system administration.
+
+Once you have all of these components, you can begin the installation process by booting the computer or virtual machine from the Ubuntu server ISO image and following the prompts to install the operating system. After the installation is complete, you will need to perform some basic configuration tasks, such as setting the hostname, creating a user account, and configuring network settings.
+
+It's also recommended to have a good understanding of server security and hardening. Also, best practice to have regular backups and updates.
+
+
+
+
+jocktmp+vj9oz@gmail.com
+Linux Ubuntu server web server nginix va php o'rnatish
+To set up a web server on a Linux Ubuntu server using Nginx and PHP, you will need to follow these steps:
+
+Install Nginx:
+Copy code
+sudo apt-get update
+sudo apt-get install nginx
+Install PHP and the necessary extensions:
+Copy code
+sudo apt-get install php-fpm php-mysql
+Configure Nginx to use PHP-FPM. You will need to edit the default Nginx configuration file, which is typically located at /etc/nginx/sites-available/default, and make sure it contains the following lines:
+Copy code
+        location ~ \.php$ {
+                include snippets/fastcgi-php.conf;
+                fastcgi_pass unix:/var/run/php/php7.2-fpm.sock;
+        }
+Restart Nginx to apply the changes:
+Copy code
+sudo systemctl restart nginx
+Test PHP by creating a file called "info.php" in the web root directory and put the following code in it:
+Copy code
+<?php
+phpinfo();
+?>
+Then access it via browser by visiting the server IP or domain name followed by /info.php.
+
+6.You can now place your PHP web application in the web root directory and configure Nginx to serve it.
+
+Please note that these commands are for Ubuntu 18.04, PHP version may vary for different distributions or versions
+
+Also, it is important to keep your server and software up to date with security updates and patches to prevent any vulnerabilities.
+
+
+
+
+jocktmp+vj9oz@gmail.com
+in uzbek
+Linux Ubuntu serverda web server o'rnatish uchun Nginx va PHP ni o'rnatish kerak. Buning uchun quyidagi harakatlar kerak:
+
+Nginx o'rnatish:
+Copy code
+sudo apt-get update
+sudo apt-get install nginx
+PHP va kerakli kengaytmalarni o'rnatish:
+Copy code
+sudo apt-get install php-fpm php-mysql
+Nginx ni PHP-FPM bilan ishlatish uchun sozlamalar qilish. Siz Nginxning default config faylini /etc/nginx/sites-available/default orqali o'zgartirishingiz kerak va unda quyidagi qatorlar mavjud bo'lishini ta'minlash kerak:
+Copy code
+        location ~ \.php$ {
+                include snippets/fastcgi-php.conf;
+                fastcgi_pass unix:/var/run/php/php7.2-fpm.sock;
+        }
+O'zgartirilgan sozlamalarni qabul qilish uchun Nginxni qayta ishga tushirish:
+Copy code
+sudo systemctl restart nginx
+PHPni test qilish uchun web root direktoriyasiga "info.php" nomli fayl yaratishingiz va unda quyidagi kodni qo'shing:
+Copy code
+<?php
+phpinfo();
+?>
+Keyin ushbu faylga server IP yoki domen nomi orqali browserda kirib ko'ring
+
+Siz endi PHP web dasturini web root direktoriyasiga joylashingiz va Nginxni ushbu dasturni saqlab turishga sozlash kerak.
+Iltimos, quyidagi amallar Ubuntu 18.04 uchun, boshqa distribyutivlar yoki versiyalar uchun PHP versiyasi farqli bo'lishi mumkin.
+
+Server va software ni izlanish va yangilash kerak bo'lgani uchun xavfsizlik yangiliklarini va patchlarini o'zgartirishga e'tibor berishingiz kerak.
