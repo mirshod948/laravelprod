@@ -8,8 +8,8 @@ return [
             'url' => 'https://api.openweathermap.org/data/2.5/weather',
         ],
         'accu-weather' => [
-            'api_key' => env('ACCU_WEATHER_API_KEY'),
-            'url' => 'https://api.example.com/accu-weather',
+            'api_key' => 'Epbex7dJkjeXL2dhpP5OH7Qyft7ybLLW',
+            'url' => 'https://dataservice.accuweather.com/locations/v1/cities/search',
         ],
         'dark-sky' => [
             'api_key' => env('DARK_SKY_API_KEY'),

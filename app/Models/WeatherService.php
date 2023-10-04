@@ -14,10 +14,18 @@ class WeatherService extends Model
     {
         $apiKey = config("weather.providers.$provider.api_key");
         $url = config("weather.providers.$provider.url");
-        $response = Http::get($url, [
-            'q' => $city,
-            'appid' => $apiKey,
-        ]);
+        if ($provider == 'open-weather-map'){
+            $response = Http::get($url, [
+                'q' => $city,
+                'appid' => $apiKey,
+            ]);
+        }
+        elseif ($provider == 'accu-weather'){
+            $response = Http::get($url, [
+                'q' => $city,
+                'apikey' => $apiKey,
+            ]);
+        }
 
         return $response->json();
     }
