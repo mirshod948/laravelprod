@@ -26,6 +26,13 @@ class WeatherService extends Model
                 'apikey' => $apiKey,
             ]);
         }
+        elseif ($provider == 'dark-sky'){
+            $response = Http::get($url, [
+                'key' => $apiKey,
+                'q' => $city,
+                'aqi'=>'yes'
+            ]);
+        }
 
         return $response->json();
     }

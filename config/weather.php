@@ -12,8 +12,8 @@ return [
             'url' => 'https://dataservice.accuweather.com/locations/v1/cities/search',
         ],
         'dark-sky' => [
-            'api_key' => env('DARK_SKY_API_KEY'),
-            'url' => 'https://api.example.com/dark-sky',
+            'api_key' => '0f1488daccf24165a0154653230410',
+            'url' => 'http://api.weatherapi.com/v1/current.json',
         ],
     ],
 ];
