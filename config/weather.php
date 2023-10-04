@@ -5,7 +5,7 @@ return [
     'providers' => [
         'open-weather-map' => [
             'api_key' => 'b34a93c573a4053fd27c4cd11b044756',
-            'url' => 'https://api.openweathermap.org/geo/1.0/direct',
+            'url' => 'https://api.openweathermap.org/data/2.5/weather',
         ],
         'accu-weather' => [
             'api_key' => env('ACCU_WEATHER_API_KEY'),
