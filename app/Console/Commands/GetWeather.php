@@ -41,20 +41,23 @@ class GetWeather extends Command
         $provider = $this->argument('provider');
         $city = $this->argument('city');
         $channel = $this->argument('channel');
+        $weatherService = new WeatherService();
         $parsedChannel = strtok($channel, ':');
         $chatId = strtok(':');
 
         if ($parsedChannel === 'telegram' && $chatId) {
-            // Handle Telegram channel
-            // Send the weather data to the Telegram channel using the provided chat_id
-            $this->info("Sending weather data to Telegram chat_id: {$chatId}");
+            $info = $weatherService->getCurrentWeatherAccu($provider, $city);
+            $res = $weatherService->sendTextMessage($chatId, $info);
+            $this->info("Sending weather data to Telegram chat_id: {$res}");
         } else if ($parsedChannel === 'mail') {
             // Handle Mail channel
             // Send the weather data to the provided email address
-            $this->info("Sending weather data to email: {$chatId}");
+        //    $res = $weatherService->getCurrentWeatherDark($provider, $city);
+            $mail = $weatherService->html_email($chatId);
+
+            $this->info("Sending weather data to email: {$mail}");
         } else {
-            $weatherService = new WeatherService();
-            $weatherData = $weatherService->getCurrentWeather($provider, $city);
+            $weatherData = $weatherService->getCurrentWeatherOpen($provider, $city);
             $this->info('Weather data: ' . json_encode($weatherData, JSON_PRETTY_PRINT));
         }
 

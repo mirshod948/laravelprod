@@ -2,15 +2,18 @@
 
 namespace App\Models;
 
+use App\Mail\SendMail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class WeatherService extends Model
 {
     use HasFactory;
 
-    public function getCurrentWeather($provider, $city)
+    public function getCurrentWeatherOpen($provider, $city)
     {
         $apiKey = config("weather.providers.$provider.api_key");
         $url = config("weather.providers.$provider.url");
@@ -20,13 +23,27 @@ class WeatherService extends Model
                 'appid' => $apiKey,
             ]);
         }
-        elseif ($provider == 'accu-weather'){
+        return $response->json();
+    }
+
+    public function getCurrentWeatherAccu($provider, $city)
+    {
+        $apiKey = config("weather.providers.$provider.api_key");
+        $url = config("weather.providers.$provider.url");
+        if ($provider == 'accu-weather'){
             $response = Http::get($url, [
                 'q' => $city,
                 'apikey' => $apiKey,
             ]);
         }
-        elseif ($provider == 'dark-sky'){
+
+        return $response->json();
+    }
+    public function getCurrentWeatherDark($provider, $city)
+    {
+        $apiKey = config("weather.providers.$provider.api_key");
+        $url = config("weather.providers.$provider.url");
+        if ($provider == 'dark-sky'){
             $response = Http::get($url, [
                 'key' => $apiKey,
                 'q' => $city,
@@ -36,4 +53,37 @@ class WeatherService extends Model
 
         return $response->json();
     }
+
+    public function sendTextMessage($chatId, $message)
+    {
+        $botToken = config('services.telegram.bot_token');
+        $url = "https://api.telegram.org/bot{$botToken}/sendMessage";
+        $response = Http::post($url, [
+            'chat_id' => $chatId,
+            'text' => $message,
+        ]);
+
+        // Handle the response as needed
+        if ($response->successful()) {
+            return response()->json(['status' => 'Message sent successfully']);
+        } else {
+            $errorResponse = json_decode($response->getBody(), true);
+            return response()->json(['status' => 'Failed to send message', 'error' => $errorResponse], $response->status());
+        }
+
+    }
+
+    public function html_email($chatId) {
+        $testMailData = [
+            'title' => 'Test Email From AllPHPTricks.com',
+            'body' => 'This is the body of test email.'
+        ];
+
+        Mail::to($chatId)->send(new SendMail($testMailData));
+
+        dd('Success! Email has been sent successfully.');
+    }
+
+
+
 }
