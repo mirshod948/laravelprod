@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
+use Illuminate\Mail\Message;
 class WeatherService extends Model
 {
     use HasFactory;
@@ -56,7 +57,7 @@ class WeatherService extends Model
 
     public function sendTextMessage($chatId, $message)
     {
-        $botToken = config('services.telegram.bot_token');
+        $botToken = env('BOT_TOKEN');
         $url = "https://api.telegram.org/bot{$botToken}/sendMessage";
         $response = Http::post($url, [
             'chat_id' => $chatId,
@@ -73,15 +74,16 @@ class WeatherService extends Model
 
     }
 
-    public function html_email($chatId) {
-        $testMailData = [
-            'title' => 'Test Email From AllPHPTricks.com',
-            'body' => 'This is the body of test email.'
+    public function html_email($chatId, $info) {
+        $receiver = $chatId; // Jo'natuvchi pochta manzili
+        $mailData = [
+            'title' => 'Oba-havo malumotlari',
+            'content' => $info,
         ];
-
-        Mail::to($chatId)->send(new SendMail($testMailData));
-
-        dd('Success! Email has been sent successfully.');
+        Mail::raw($mailData['content'], function (Message $message) use ($receiver, $mailData) {
+            $message->to($receiver)
+                ->subject($mailData['title']);
+        });
     }
 
 

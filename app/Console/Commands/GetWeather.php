@@ -53,7 +53,8 @@ class GetWeather extends Command
             // Handle Mail channel
             // Send the weather data to the provided email address
         //    $res = $weatherService->getCurrentWeatherDark($provider, $city);
-            $mail = $weatherService->html_email($chatId);
+            $info = $weatherService->getCurrentWeatherDark($provider, $city);
+            $mail = $weatherService->html_email($chatId, $info);
 
             $this->info("Sending weather data to email: {$mail}");
         } else {
